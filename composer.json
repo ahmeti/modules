@@ -1,0 +1,41 @@
+{
+    "name": "ahmeti/modules",
+    "description": "Ahmeti Modules",
+    "homepage": "https://ahmetimamoglu.com.tr",
+    "keywords": ["ahmeti", "modules"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmet Imamoglu",
+            "email": "ahmet363@gmail.com",
+            "role": "Developer",
+            "homepage": "https://ahmetimamoglu.com.tr"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5"
+    },
+    "require-dev": {},
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Ahmeti\\Modules\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Core": "App\\Core"
+            },
+            "providers": [
+                "Ahmeti\\Modules\\Core\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}
