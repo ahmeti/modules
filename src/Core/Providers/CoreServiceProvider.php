@@ -25,13 +25,13 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->singleton('coreservice', function () {
 
-            $customCoreService = 'App\Modules\Core\Services\CoreService';
+            $customCoreService = '\App\Modules\Core\Services\CoreService';
 
             if( class_exists($customCoreService) ){
                 return new $customCoreService();
             }
 
-            return new Ahmeti\Modules\Core\Services\CoreService;
+            return new \Ahmeti\Modules\Core\Services\CoreService;
         });
     }
 
