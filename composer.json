@@ -32,11 +32,13 @@
         "laravel": {
             "aliases": {
                 "Core": "App\\Core",
-                "Response": "App\\Response"
+                "Response": "App\\Response",
+                "Form": "App\\Form"
             },
             "providers": [
                 "Ahmeti\\Modules\\Core\\Providers\\CoreServiceProvider",
-                "Ahmeti\\Modules\\Core\\Providers\\ResponseServiceProvider"
+                "Ahmeti\\Modules\\Core\\Providers\\ResponseServiceProvider",
+                "Ahmeti\\Modules\\Core\\Providers\\FormServiceProvider"
             ]
         }
     }
