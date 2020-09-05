@@ -31,10 +31,12 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "Core": "App\\Core"
+                "Core": "App\\Core",
+                "Response": "App\\Response"
             },
             "providers": [
-                "Ahmeti\\Modules\\Core\\Providers\\CoreServiceProvider"
+                "Ahmeti\\Modules\\Core\\Providers\\CoreServiceProvider",
+                "Ahmeti\\Modules\\Core\\Providers\\ResponseServiceProvider"
             ]
         }
     }
