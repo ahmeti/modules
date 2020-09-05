@@ -1,6 +1,6 @@
 <?php
 
-namespace Ahmeti\Core\Services;
+namespace Ahmeti\Modules\Core\Services;
 
 use App\Core;
 
