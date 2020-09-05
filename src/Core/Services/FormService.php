@@ -828,19 +828,19 @@ class FormService {
      *  @param array $data Varsayılan boştur. Keyler: <br>id<br>class<br>ltext (Loading Text)<br>disabled<br>readonly<br>labeltitle<br>label
      *  @return none Değer döndürmez.
      */
-    public function submit($name, $value='Gönder', $data=array())
+    public function submit($value='SAVE', $data=[])
     {
         $p=array();
         $p[]='<button type="submit"';
-        if ( !empty($name) ){ $p[]='name="'.$name.'"'; }
+        $p[]='name="'.empty($data['name']) ? 'submit' : $data['name'].'"';
         if ( !empty($value) ){ $p[]='value="'.$value.'"'; }
         if ( !empty($data['id']) ){ $p[]='id="'.$data['id'].'"'; }
         if ( !empty($data['disabled']) ){ $p[]='disabled="disabled"'; }
         if ( !empty($data['readonly']) ){ $p[]='readonly="readonly"'; }
         if ( empty($data['class']) ){
-            $p[]='class="btn btn-success btn-block btn-sm'.($this->_type=='filter' ? ' filterFormButton':'').'"';
+            $p[]='class="btn btn-success btn-block btn-sm'.($this->_type=='filter' ? ' filter-form-button':'').'"';
         }else{
-            $p[]='class="btn btn-success btn-block btn-sm '.$data['class'].'"';
+            $p[]='class="'.$data['class'].'"';
         }
         if ($this->_ajaxform==true && $this->_type!='filter'){
             // Loading Text
