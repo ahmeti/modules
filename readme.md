@@ -70,12 +70,11 @@ protected function authenticated(Request $request, $user)
         session()->save();
     }
 
-    if( cookie()->has('redirect_url') ){
-        $redirectUrl = cookie()->get('redirect_url');
-        return redirect($redirectUrl)->cookie(cookie()->forget('redirect_url'));
+    if( Cookie::has('redirect_url') ){
+        return redirect(Cookie::get('redirect_url'))->cookie(Cookie::forget('redirect_url'));
     }
 
-    return redirect($this->redirectTo)->cookie(cookie()->forget('redirect_url'));
+    return redirect($this->redirectTo)->cookie(Cookie::forget('redirect_url'));
 }
 ```
 
