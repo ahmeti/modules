@@ -108,6 +108,12 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('logout', 'LoginController@logout')->name('logout');
 
 });
+
+Route::group(['middleware' => ['auth', 'auth.ajax']], function () {
+
+    Route::get('/home', 'Home\HomeController@index')->name('home');
+
+});
 ```
 #### 10. Install ahmeti-core-js
 ```
@@ -168,4 +174,12 @@ mix.styles([
     "cross-env": "xxx",
     "laravel-mix": "xxx"
 }
+```
+
+#### 13. Set Auth Ajax Middleware
+```php
+protected $routeMiddleware = [
+    // ...
+    'auth.ajax' => \Ahmeti\Modules\Core\Middlewares\AuthAjaxRequest::class,
+];
 ```
