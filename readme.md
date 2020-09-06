@@ -176,10 +176,78 @@ mix.styles([
 }
 ```
 
-#### 13. Set Auth Ajax Middleware
+#### 13. Set Auth Ajax Middleware & Disable Verify Csrf Token Middleware
 ```php
+protected $middlewareGroups = [
+    // ...
+    // \App\Http\Middleware\VerifyCsrfToken::class,
+];
+
 protected $routeMiddleware = [
     // ...
     'auth.ajax' => \Ahmeti\Modules\Core\Middlewares\AuthAjaxRequest::class,
 ];
+```
+
+#### 14. Change User Model
+```php
+namespace App\Modules\User\Models;
+
+use Ahmeti\Modules\Core\Scopes\CompanyScope;
+use Ahmeti\Modules\Core\Traits\CompanyTrait;
+use App\Core;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+    use SoftDeletes;
+    use CompanyTrait;
+
+    protected $table = 'users';
+    public $incrementing = false;
+    protected $guarded = ['id'];
+
+    protected $hidden = ['password', 'remember_token'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        if( Core::companyId() > 0 ){
+            static::addGlobalScope(new CompanyScope);
+        }
+
+        static::creating(function ($model) {
+            $model->company_id = Core::companyId();
+            $model->id = User::withTrashed()->max('id') + 1;
+
+            $model->created_id = Core::userId();
+            $model->updated_id = Core::userId();
+        });
+        
+        static::updating(function ($model) {
+            $model->updated_id = Core::userId();
+        });
+    }
+
+    public static function getName($id)
+    {
+        $model = User::select('name')->find($id);
+        return $model ? $model->name : null;
+    }
+
+    public function getDB($softDelete = true)
+    {
+        return DB::table($this->table)
+            ->where('company_id', Core::companyId())
+            ->when($softDelete, function ($query){
+                $query->whereNull('deleted_at');
+            });
+    }
+}
 ```
