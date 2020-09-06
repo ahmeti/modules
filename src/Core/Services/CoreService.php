@@ -240,6 +240,8 @@ class CoreService {
             ->get()
             ->toArray();
 
+        $items = array_map(function ($item){ return (array)$item; }, $items);
+
         $menu = [];
         foreach ($items as $r) {
 
