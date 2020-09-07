@@ -249,7 +249,7 @@ class FormService {
      *  @param array $data Varsayılan boştur. Keyler: <br>id<br>class<br>disabled<br>readonly<br>labeltitle<br>desc<br>ph<br>min-width=40<br>groupclass
      *  @return mixed Değer döndürmez.
      */
-    public function number($name, $label, $value = '', $min = 0, $max = 9999, $sep = '.', $data = [])
+    public function number($name, $label, $value = '', $data = [])
     {
         $p=array();
         $p[]='<input type="text"';
@@ -257,9 +257,9 @@ class FormService {
         if ( !empty($data['id']) ){ $p[] = 'id="'.$data['id'].'"'; }
         if ( !empty($name) ){ $p[] = 'name="'.$name.'"'; }
         if ( !empty($value) ){ $p[] = 'value="'.$value.'"'; }
-        $p[] = 'data-v-min="'.$min.'"';
-        $p[] = 'data-v-max="'.$max.'"';
-        $p[] = 'data-a-sep="'.$sep.'"';
+        $p[] = 'data-v-min="'.(isset($data['min']) ? $data['min'] : '0').'"';
+        $p[] = 'data-v-max="'.(isset($data['max']) ? $data['max'] : '9999').'"';
+        $p[] = 'data-a-sep="'.(isset($data['sep']) ? $data['sep'] : '').'"';
         $p[] = 'data-a-dec="null"';
         if ( !empty($data['ph']) ){ $p[] = 'placeholder="'.$data['ph'].'"'; }
         if ( !empty($data['class']) ){ $p[] = 'class="form-control input-sm '.$data['class'].'"'; }else{ $p[] = 'class="form-control input-sm"'; }
@@ -294,7 +294,7 @@ class FormService {
      *  @param array $data Varsayılan boştur. Keyler: <br>id<br>class<br>disabled<br>readonly<br>labeltitle<br>desc<br>ph<br>min-width=40<br>groupclass
      *  @return none Değer döndürmez.
      */
-    public function decimal($name, $label, $value = '', $min = '0.00', $max = '99999999.99', $sep='.', $dec = ',', $data = [])
+    public function decimal($name, $label, $value = '', $data = [])
     {
         $p=[];
         $p[] = '<input type="text"';
@@ -302,10 +302,10 @@ class FormService {
         if ( !empty($data['id']) ){ $p[] = 'id="'.$data['id'].'"'; }
         if ( !empty($name) ){ $p[] = 'name="'.$name.'"'; }
         if ( !empty($value) ){ $p[] = 'value="'.$value.'"'; }
-        $p[] = 'data-v-min="'.$min.'"';
-        $p[] = 'data-v-max="'.$max.'"';
-        $p[] = 'data-a-sep="'.$sep.'"';
-        $p[] = 'data-a-dec="'.$dec.'"';
+        $p[] = 'data-v-min="'.(isset($data['min']) ? $data['min'] : '0.00').'"';
+        $p[] = 'data-v-max="'.(isset($data['max']) ? $data['max'] : '99999999.99').'"';
+        $p[] = 'data-a-sep="'.(isset($data['sep']) ? $data['sep'] : '').'"';
+        $p[] = 'data-a-dec="'.(isset($data['dec']) ? $data['dec'] : '').'"';
         $p[] = 'data-a-pad="false"';
         if ( !empty($data['ph']) ){ $p[] = 'placeholder="'.$data['ph'].'"'; }
         if ( !empty($data['class']) ){ $p[] = 'class="form-control input-sm '.$data['class'].'"'; }else{ $p[] = 'class="form-control input-sm"'; }
