@@ -4,6 +4,7 @@ namespace Ahmeti\Modules\Core\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class CoreService {
@@ -111,7 +112,7 @@ class CoreService {
             if( ! empty($v['html']) ){
                 $newEnums[$v['key']] = $v['html'];
             }else{
-                $newEnums[$v['key']] = '<i '.(empty($v['color']) ? '' : 'style="color:'.$v['color'].';" ').'class="'.$v['icon'].'"></i> '.$v['value'];
+                $newEnums[$v['key']] = new HtmlString('<i '.(empty($v['color']) ? '' : 'style="color:'.$v['color'].';" ').'class="'.$v['icon'].'"></i> '.$v['value']);
             }
         }
         return $newEnums;
@@ -258,8 +259,8 @@ class CoreService {
 
     public function alert($status=false, $desc='', $mb=10)
     {
-        return '<div style="margin-bottom:'.$mb.'px;padding:8px;border-width:3px" class="alert '.
-            ($status ? 'alert-success' : 'alert-danger').'" role="alert">'.$desc.'</div>';
+        return new HtmlString('<div style="margin-bottom:'.$mb.'px;padding:8px;border-width:3px" class="alert '.
+            ($status ? 'alert-success' : 'alert-danger').'" role="alert">'.$desc.'</div>');
     }
 
     public function openPanel($title, $data = [])
@@ -273,7 +274,7 @@ class CoreService {
 
         //$data['icon'] = empty($data['icon']) ? 'fa-bars' : $data['icon'];
 
-        return '
+        $html = '
         <div class="panel panel-app'.(empty($data['class']) ? '' : ' '.$data['class'] ).'">
             <div class="panel-heading noselect clearfix">
                 '.(isset($data['links']) ? '
@@ -293,13 +294,13 @@ class CoreService {
             </div>
             <div id="'.$iid.'" class="collapse '.(isset($data['default']) ? $data['default'] : 'in').'">
                 <div class="panel-body'.(isset($data['bodyClass']) ? ' '.$data['bodyClass'] : '').'" style="'.$this->isMobile('position:relative !important;overflow-x:hidden !important;background-color:#F8F9F9').'">';
+
+        return new HtmlString($html);
     }
 
     public function closePanel()
     {
-        return '</div>
-            </div>
-        </div>';
+        return new HtmlString('</div></div></div>');
     }
 
     public function strLimit($value, $limit = 100, $end = '...')
