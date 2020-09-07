@@ -184,18 +184,17 @@ class FormService {
      *  @param integer $id Varsayılan boştur. ID set edilir.
      *  @return mixed Değer döndürmez.
      */
-    public function hidden($name, $value='', $id='', $data = [])
+    public function hidden($name, $value='', $data = [])
     {
         $p = [];
         $p[]='<input type="hidden"';
-        if ( !empty($id) ){ $p[] = 'id="'.$id.'"'; }
+        if ( !empty($data['id']) ){ $p[]='id="'.$data['id'].'"'; }
         if ( !empty($name) ){ $p[] = 'name="'.$name.'"'; }
         if ( !empty($value) ){ $p[] = 'value="'.$value.'"'; }
         if ( !empty($data['disabled']) ){ $p[]='disabled'; }
         $p[]='/>';
 
-        if ($this->_only){ return implode(' ', $p); }
-        return implode(' ', $p);
+        return new HtmlString(implode(' ', $p));
     }
 
     /**
