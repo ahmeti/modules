@@ -3,6 +3,7 @@
 namespace Ahmeti\Modules\Core\Services;
 
 use App\Core;
+use Illuminate\Support\HtmlString;
 
 class FormService {
 
@@ -125,7 +126,7 @@ class FormService {
         if ( empty($label_title) ){ $label_title = $label; }
         if ( empty($style) ){ $s = ''; }else{ $s = ' style="'.$style.'"'; }
         if ( !empty($class) ){ $class = ' '.$class; }
-        return
+        $html =
             '<div class="form-group'.$class.'"'.$s.'>'.
             '<label class="col-sm-3 control-label">'.
             '<span class="ellipsis">'.
@@ -137,6 +138,8 @@ class FormService {
                     ( empty($extraLine) ? '' : $extraLine).
             '</div>'.
             '</div>';
+
+        return new HtmlString($html);
     }
 
     protected function templateInputGroup($type, $label, $tag, $label_title = '', $desc = '', $btn = [], $extraLine = null)
@@ -203,18 +206,18 @@ class FormService {
      *  @param array $data Varsayılan boştur. Keyler: <br>id<br>class<br>disabled<br>readonly<br>labeltitle<br>desc<br>ph<br>min-width=40<br>groupclass<br>dstyle<br>igroup
      *  @return mixed Değer döndürmez.
      */
-    public function text($name, $label, $value = '', $maxlength = '', $data = [])
+    public function text($name, $label, $value = '', $data = [])
     {
         $p = [];
         $p[]='<input type="text"';
         if ( !empty($data['id']) ){ $p[]='id="'.$data['id'].'"'; }
         if ( !empty($name) ){ $p[]='name="'.$name.'"'; }
         if ( !empty($value) ){ $p[]='value="'.str_replace('"', '”', $value).'"'; }
-        if ( !empty($data['class']) ){ $p[]='class="form-control input-sm '.$data['class'].'"'; }else{ $p[]='class="form-control input-sm"'; }
+        if ( !empty($data['class']) ){ $p[]='class="'.$data['class'].'"'; }else{ $p[]='class="form-control input-sm"'; }
         if ( !empty($data['disabled']) ){ $p[]='disabled'; }
         if ( !empty($data['readonly']) ){ $p[]='readonly="readonly"'; }
         if ( !empty($data['ph']) ){ $p[]='placeholder="'.$data['ph'].'"'; }
-        if ( !empty($maxlength) ){ $p[]='maxlength="'.$maxlength.'"'; }
+        if ( !empty($data['max']) ){ $p[]='maxlength="'.$data['max'].'"'; }
         if ( !empty($data['min-width']) ){ $p[]='style="min-width:'.$data['min-width'].'px !important"'; }
         $p[]='autocomplete="off"';
         $p[]='/>';
