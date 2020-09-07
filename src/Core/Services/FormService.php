@@ -159,7 +159,7 @@ class FormService {
             }
         }
 
-        return
+        $html =
             '<div class="form-group">'.
             '<label class="col-sm-3 control-label">'.
             '<span class="ellipsis">'.
@@ -172,6 +172,8 @@ class FormService {
             ( empty($extraLine) ? '' : $extraLine).
             '</div>'.
             '</div>';
+
+        return new HtmlString($html);
     }
 
     /**
@@ -981,7 +983,7 @@ class FormService {
         $this->_html.=self::templateCheckbox($label, $p, @$data['desc']);
     }
 
-    public function password($name, $label, $value = '', $maxlength = '', $data = [])
+    public function password($name, $label, $value = '', $data = [])
     {
         $p = [];
         $p[]='<input type="password"';
@@ -992,7 +994,7 @@ class FormService {
         if ( !empty($data['disabled']) ){ $p[]='disabled'; }
         if ( !empty($data['readonly']) ){ $p[]='readonly="readonly"'; }
         if ( !empty($data['ph']) ){ $p[]='placeholder="'.$data['ph'].'"'; }
-        if ( !empty($maxlength) ){ $p[]='maxlength="'.$maxlength.'"'; }
+        if ( !empty($data['max']) ){ $p[]='maxlength="'.$data['max'].'"'; }
         if ( !empty($data['min-width']) ){ $p[]='style="min-width:'.$data['min-width'].'px !important"'; }
         $p[]='autocomplete="new-password"';
         $p[]='/>';
