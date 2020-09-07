@@ -302,4 +302,8 @@ class CoreService {
         </div>';
     }
 
+    public function strLimit($value, $limit = 100, $end = '...')
+    {
+        return Str::limit($value, $limit, $end);
+    }
 }
