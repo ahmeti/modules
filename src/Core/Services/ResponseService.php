@@ -3,6 +3,9 @@
 namespace Ahmeti\Modules\Core\Services;
 
 use App\Core;
+use App\Response;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResponseService {
 
@@ -171,5 +174,40 @@ class ResponseService {
             'message'   => $this->_message,
             'data'      => $this->_data,
         ]);
+    }
+
+    public function failedValidationForm(Validator $validator)
+    {
+        $errorKey = null;
+        $errorMessage = null;
+
+        foreach ($validator->errors()->toArray() as $key => $message){
+            $errorKey = $key;
+            $errorMessage = $message[0];
+            break;
+        }
+
+        $response = Response::status(false)
+            ->message($errorMessage)
+            ->errorName($errorKey)
+            ->form();
+
+        throw new HttpResponseException($response);
+    }
+
+    public function failedValidationPage(Validator $validator, $title)
+    {
+        $errorMessage = null;
+
+        foreach ($validator->errors()->toArray() as $key => $message){
+            $errorMessage = $message[0];
+            break;
+        }
+
+        $response = Response::title($title)
+            ->body(Core::alert(false, 'İşlem başarısız. '.$errorMessage))
+            ->page();
+
+        throw new HttpResponseException($response);
     }
 }
