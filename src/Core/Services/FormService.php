@@ -113,12 +113,12 @@ class FormService {
             $p[] = $this->hidden('_method', 'PUT');
         }
 
-        return implode(' ', $p);
+        return new HtmlString(implode(' ', $p));
     }
 
     public function close()
     {
-        return '</form>'.$this->_right.'<!-- End Form -->';
+        return new HtmlString('</form>'.$this->_right.'<!-- End Form -->');
     }
 
     protected function template($label, $tag, $label_title='', $desc='', $class='', $style='', $extraLine='')
@@ -866,10 +866,12 @@ class FormService {
             $label = true;
         }
 
-        return
+        $html =
             '<div class="form-group">'.
             '<div class="'.($label===true ? 'col-sm-9 col-sm-offset-3' : 'col-sm-12').'">'.implode(' ', $p).'</div>'.
             '</div>';
+
+        return new HtmlString($html);
     }
 
     public function htmlWithLabel($label, $html, $data=array())
