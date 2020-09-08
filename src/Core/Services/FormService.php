@@ -266,14 +266,14 @@ class FormService {
         $p[] = 'data-a-sep="'.(isset($data['sep']) ? $data['sep'] : '').'"';
         $p[] = 'data-a-dec="null"';
         if ( !empty($data['ph']) ){ $p[] = 'placeholder="'.$data['ph'].'"'; }
-        if ( !empty($data['class']) ){ $p[] = 'class="form-control input-sm '.$data['class'].'"'; }else{ $p[] = 'class="form-control input-sm"'; }
+        if ( !empty($data['class']) ){ $p[]='class="'.$data['class'].'"'; }else{ $p[]='class="form-control input-sm"'; }
         if ( !empty($data['disabled']) ){ $p[] = 'disabled="disabled"'; }
         if ( !empty($data['readonly']) ){ $p[] = 'readonly="readonly"'; }
         if ( !empty($data['min-width']) ){ $p[] = 'style="min-width:'.$data['min-width'].'px !important"'; }
         $p[]='autocomplete="off"';
         $p[]='/>';
 
-        if ($this->_only || !empty($data['only'])){ return implode(' ', $p); }
+        if ($this->_only || !empty($data['only'])){ return new HtmlString(implode(' ', $p)); }
 
         $labeltitle = isset( $data['labeltitle'] ) ? $data['labeltitle'] : '';
         $desc = isset( $data['desc'] ) ? $data['desc'] : '';
@@ -312,14 +312,14 @@ class FormService {
         $p[] = 'data-a-dec="'.(isset($data['dec']) ? $data['dec'] : '').'"';
         $p[] = 'data-a-pad="false"';
         if ( !empty($data['ph']) ){ $p[] = 'placeholder="'.$data['ph'].'"'; }
-        if ( !empty($data['class']) ){ $p[] = 'class="form-control input-sm '.$data['class'].'"'; }else{ $p[] = 'class="form-control input-sm"'; }
+        if ( !empty($data['class']) ){ $p[]='class="'.$data['class'].'"'; }else{ $p[]='class="form-control input-sm"'; }
         if ( !empty($data['disabled']) ){ $p[] = 'disabled="disabled"'; }
         if ( !empty($data['readonly']) ){ $p[] = 'readonly="readonly"'; }
         if ( !empty($data['min-width']) ){ $p[] = 'style="min-width:'.$data['min-width'].'px !important"'; }
         $p[] = 'autocomplete="off"';
         $p[] = '/>';
 
-        if ( $this->_only  || !empty($data['only'])){ return implode(' ', $p); }
+        if ( $this->_only  || !empty($data['only'])){ return new HtmlString(implode(' ', $p)); }
 
         $labeltitle = isset( $data['labeltitle'] ) ? $data['labeltitle'] : '';
         $desc = isset( $data['desc'] ) ? $data['desc'] : '';
@@ -652,7 +652,7 @@ class FormService {
         return self::template($label, $p, $data['labeltitle'], $data['desc']);
     }
 
-    public function numberNumber($dec1name, $dec2name, $label, $dec1value='', $dec2value='', $min = 0, $max = 9999, $sep='.', $dec1data = [], $dec2data = [], $data = [])
+    public function numberNumber($dec1name, $dec2name, $label, $dec1value='', $dec2value='', $dec1data = [], $dec2data = [], $data = [])
     {
         $dec1data['only'] = true;
         $dec2data['only'] = true;
@@ -662,11 +662,11 @@ class FormService {
         $p[] = '<div class="row">';
 
         $p[] = '<div class="col-xs-6" style="padding-right: 5px">';
-        $p[] = $this->number($dec1name, '', $dec1value, $min, $max, $sep, $dec1data);
+        $p[] = $this->number($dec1name, '', $dec1value, $dec1data);
         $p[] = '</div>';
 
         $p[] = '<div class="col-xs-6" style="padding-left: 5px">';
-        $p[] = $this->number($dec2name, '', $dec2value, $min, $max, $sep, $dec2data);
+        $p[] = $this->number($dec2name, '', $dec2value, $dec2data);
         $p[] = '</div>';
 
         $p[] = '</div>';
