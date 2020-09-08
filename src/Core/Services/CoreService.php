@@ -33,6 +33,19 @@ class CoreService {
         return null;
     }
 
+    public function toInteger($id)
+    {
+        return (int)preg_replace('@[^0-9]@', '', $id);
+    }
+
+    public function toDecimal($decimal)
+    {
+        if ( is_float($decimal) ){
+            return $decimal;
+        }
+        return (float)str_replace(',', '.', str_replace('.', '', $decimal));
+    }
+
     public function pagination($model, $request)
     {
         if( $this->isMobile() ){
