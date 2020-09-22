@@ -836,7 +836,7 @@ class FormService {
     {
         $p=array();
         $p[]='<button type="submit"';
-        $p[]='name="'.empty($data['name']) ? 'submit' : $data['name'].'"';
+        $p[]='name="'.(empty($data['name']) ? 'submit' : $data['name']).'"';
         if ( !empty($value) ){ $p[]='value="'.$value.'"'; }
         if ( !empty($data['id']) ){ $p[]='id="'.$data['id'].'"'; }
         if ( !empty($data['disabled']) ){ $p[]='disabled="disabled"'; }
