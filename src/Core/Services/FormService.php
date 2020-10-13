@@ -766,15 +766,15 @@ class FormService {
      *  @param array $data Varsayılan boştur. Keyler: <br>maxlength<br>id<br>class<br>disabled<br>readonly<br>labeltitle<br>desc<br>ph<br>html<br>tinymce<br>groupclass<br>dstyle<br>attr[]
      *  @return none Değer döndürmez.
      */
-    public function textArea($name, $label, $value='', $rows=3, $data=[])
+    public function textArea($name, $label, $value='', $data=[])
     {
         $p=array();
         $p[]='<textarea style="resize: vertical"';
         if ( !empty($data['id']) ){ $p[]='id="'.$data['id'].'"'; }
         if ( !empty($name) ){ $p[]='name="'.$name.'"'; }
-        $p[]='rows="'.$rows.'"';
+        if ( !empty($data['rows']) ){ $p[]='rows="'.$data['rows'].'"'; }
         if ( !empty($data['maxlength']) ){ $p[]='maxlength="'.$data['maxlength'].'"'; }
-        if ( empty($data['class']) ){ $p[]='class="form-control input-sm"'; }else{ $p[]='class="form-control input-sm '.$data['class'].'"'; }
+        if ( empty($data['class']) ){ $p[]='class="form-control input-sm"'; }else{ $p[]='class="'.$data['class'].'"'; }
         if ( !empty($data['disabled']) ){ $p[]='disabled'; }
         if ( !empty($data['ph']) ){ $p[]='placeholder="'.$data['ph'].'"'; }
         if ( !empty($data['readonly']) ){ $p[]='readonly="readonly"'; }
